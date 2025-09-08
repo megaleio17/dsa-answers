@@ -9,7 +9,6 @@
 import random, usage_time
 import matplotlib.pyplot as plt
 
-v = [random.randint(0, 2**8) for _ in range(10**5 * (20 - 7))]
 
 def get_by_index(v: list):
     return v[random.randint(0, len(v)) - 1]
