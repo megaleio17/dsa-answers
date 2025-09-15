@@ -21,13 +21,16 @@ import random, usage_time
 import matplotlib.pyplot as plt
 
 def sum_elements(v: list):
-    return sum(v)
+    sum_ = 0
+    for i in v:
+        sum_ = sum_ + i
+    return sum_
 
 items = range(1, 10**5 * 14, 50000)
 func = usage_time.get_usage_time()(sum_elements)
 times = [
     func ([
-        random.randint(1, 3)
+        random.randint(0, 10)
         for _ in range(n)
     ])
     for n in items
@@ -105,19 +108,19 @@ ax.set_ylabel('Time, sec')
 import random, usage_time
 import matplotlib.pyplot as plt
 
-def horner_method(v: list):
+def horner_method(v: list, x):
     res = 0
     for c in v:
-        res = res * 2 + c
+        res = res * x + c
     return res
 
-items = range(1, 10**5 * 14, 50000)
+items = range(1, 10**5 * 14, 10000)
 func = usage_time.get_usage_time()(horner_method)
 times = [
-    func ([
-        random.randint(1, 3)
-        for _ in range(n)
-    ])
+    func (
+        [1 for _ in range(n)],
+        0.000001
+    )
     for n in items
 ]
 
@@ -150,11 +153,11 @@ import random, usage_time
 import matplotlib.pyplot as plt
 
 def search_min(v: list):
-    min = 10**5 * 14
+    min_ = 10**5 * 14
     for n in v:
-        if n < min:
-            min = n
-    return min
+        if n < min_:
+            min_ = n
+    return min_
 
 items = range(1, 10**5 * 14, 50000)
 func = usage_time.get_usage_time()(search_min)
