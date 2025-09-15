@@ -41,6 +41,19 @@ ax.set_xlabel('Number of elements, $10^n$ pieces')
 ax.set_ylabel('Time, sec')
 ```
 
+
+
+
+    Text(0, 0.5, 'Time, sec')
+
+
+
+
+    
+![png](lr1_files/lr1_2_1.png)
+    
+
+
 ### 1.3
 
 
@@ -85,6 +98,8 @@ ax.set_ylabel('Time, sec')
     
 
 
+### 1.4
+
 
 ```python
 import random, usage_time
@@ -123,9 +138,11 @@ ax.set_ylabel('Time, sec')
 
 
     
-![png](lr1_files/lr1_5_1.png)
+![png](lr1_files/lr1_6_1.png)
     
 
+
+### 1.6
 
 
 ```python
@@ -166,7 +183,7 @@ ax.set_ylabel('Time, sec')
 
 
     
-![png](lr1_files/lr1_6_1.png)
+![png](lr1_files/lr1_8_1.png)
     
 
 
@@ -213,6 +230,6 @@ ax.set_ylabel('Time, sec')
 
 
     
-![png](lr1_files/lr1_8_1.png)
+![png](lr1_files/lr1_10_1.png)
     
 
