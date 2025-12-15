@@ -74,7 +74,7 @@ def gm_encrypt_bit(m: int, n: int) -> int:
         x = random.randint(1, n-1) # генерируем рандомное число
         if pow(x, 2, n) != 1:
             break
-    c = pow(x, 2, n) * (1 if m == 0 else -1) % n  # если бит 0 — квадрат, если 1 — минус квадрат
+    c = pow(x, 2, n) * (1 if m == 0 else -1) % n  # вычисляет (x² mod n) (важно, чтобы x² mod n ≠ 1 иначе шифрование некорректно)
     return c  # возвращаем зашифрованный бит
 
 def text_to_bits(text: str) -> list[int]:
