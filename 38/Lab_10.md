@@ -18,29 +18,29 @@
 # Числа Фибоначчи
 # =============================
 
-def fib_recursive(n):
+def fib_recursive(n): # рекурсивное вычисление числа Фибоначчи
     if n <= 1:
-        return n
+        return n # базовый случай
     return fib_recursive(n-1) + fib_recursive(n-2)
 
-def fib_memo(n, memo={}):
+def fib_memo(n, memo={}):  # вычисление Фибоначчи с запоминанием уже найденных значений
     if n in memo:
-        return memo[n]
+        return memo[n] # если значение уже есть, возвращаем его
     if n <= 1:
         memo[n] = n
     else:
         memo[n] = fib_memo(n-1, memo) + fib_memo(n-2, memo)
     return memo[n]
 
-def fib_iterative(n):
+def fib_iterative(n): # итеративное вычисление последовательности Фибоначчи
     if n == 0: return [0]
-    seq = [0, 1]
+    seq = [0, 1] # первые два числа
     for i in range(2, n+1):
-        seq.append(seq[-1] + seq[-2])
+        seq.append(seq[-1] + seq[-2])  # сумма двух предыдущих
     return seq
 
-n = 10
-fib_rec = [fib_recursive(i) for i in range(n+1)]
+n = 10 # количество чисел Фибоначчи
+fib_rec = [fib_recursive(i) for i in range(n+1)] # вычисление разными способами
 fib_mem = [fib_memo(i) for i in range(n+1)]
 fib_it = fib_iterative(n)
 
@@ -48,25 +48,25 @@ fib_it = fib_iterative(n)
 # Задача о рюкзаке
 # =============================
 
-def knapsack(values, weights, W):
+def knapsack(values, weights, W): # количество предметов
     n = len(values)
-    dp = [[0]*(W+1) for _ in range(n+1)]
-    for i in range(1, n+1):
+    dp = [[0]*(W+1) for _ in range(n+1)]  # таблица динамического программирования
+    for i in range(1, n+1): # заполнение таблицы
         for w in range(W+1):
-            if weights[i-1] <= w:
+            if weights[i-1] <= w: # выбираем максимум: брать предмет или нет 
                 dp[i][w] = max(dp[i-1][w], values[i-1] + dp[i-1][w - weights[i-1]])
             else:
                 dp[i][w] = dp[i-1][w]
-    w = W
+    w = W # восстановление выбранных предметов
     items = []
     for i in range(n, 0, -1):
         if dp[i][w] != dp[i-1][w]:
-            items.append(i-1)
+            items.append(i-1)  # предмет был взят
             w -= weights[i-1]
     items.reverse()
     return dp[n][W], items
 
-values = [3, 4, 2]
+values = [3, 4, 2] # данные для задачи о рюкзаке
 weights = [2, 3, 1]
 W = 5
 max_val, chosen_items = knapsack(values, weights, W)
@@ -77,15 +77,15 @@ max_val, chosen_items = knapsack(values, weights, W)
 
 def lis(arr):
     n = len(arr)
-    dp = [1]*n
-    prev = [-1]*n
+    dp = [1]*n # dp[i] — длина LIS, заканчивающейся в i
+    prev = [-1]*n  # массив для восстановления последовательности
     for i in range(n):
         for j in range(i):
             if arr[j] < arr[i] and dp[j]+1 > dp[i]:
                 dp[i] = dp[j]+1
                 prev[i] = j
-    idx = dp.index(max(dp))
-    seq = []
+    idx = dp.index(max(dp)) # индекс максимального элемента
+    seq = [] # восстановление подпоследовательности
     while idx != -1:
         seq.append(arr[idx])
         idx = prev[idx]
@@ -102,13 +102,13 @@ lis_len, lis_seq = lis(arr_lis)
 def lcs(X, Y):
     m, n = len(X), len(Y)
     dp = [[0]*(n+1) for _ in range(m+1)]
-    for i in range(m):
+    for i in range(m):  # заполнение таблицы
         for j in range(n):
             if X[i] == Y[j]:
                 dp[i+1][j+1] = dp[i][j]+1
             else:
                 dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j])
-    i, j = m, n
+    i, j = m, n # восстановление подпоследовательности
     seq = []
     while i > 0 and j > 0:
         if X[i-1] == Y[j-1]:
@@ -132,17 +132,17 @@ lcs_len, lcs_seq = lcs(X, Y)
 
 def levenshtein(s1, s2):
     m, n = len(s1), len(s2)
-    dp = [[0]*(n+1) for _ in range(m+1)]
-    for i in range(m+1):
+    dp = [[0]*(n+1) for _ in range(m+1)] # таблица расстояний
+    for i in range(m+1): # заполнение первой строки и столбца
         dp[i][0] = i
     for j in range(n+1):
         dp[0][j] = j
-    for i in range(1,m+1):
+    for i in range(1,m+1): # вычисление расстояния
         for j in range(1,n+1):
             cost = 0 if s1[i-1]==s2[j-1] else 1
-            dp[i][j] = min(dp[i-1][j]+1,
-                           dp[i][j-1]+1,
-                           dp[i-1][j-1]+cost)
+            dp[i][j] = min(dp[i-1][j]+1, # удаление
+                           dp[i][j-1]+1, # вставка
+                           dp[i-1][j-1]+cost) # замена
     return dp[m][n]
 
 s1 = "kitten"
@@ -155,13 +155,13 @@ lev_dist = levenshtein(s1, s2)
 
 def min_path_sum(matrix):
     m, n = len(matrix), len(matrix[0])
-    dp = [[0]*n for _ in range(m)]
+    dp = [[0]*n for _ in range(m)] # dp[i][j] — минимальная сумма до клетки (i, j)
     dp[0][0] = matrix[0][0]
-    for i in range(1, m):
+    for i in range(1, m): # первая колонка
         dp[i][0] = dp[i-1][0] + matrix[i][0]
-    for j in range(1, n):
+    for j in range(1, n): # первая строка
         dp[0][j] = dp[0][j-1] + matrix[0][j]
-    for i in range(1, m):
+    for i in range(1, m): # заполнение остальной таблицы
         for j in range(1, n):
             dp[i][j] = matrix[i][j] + min(dp[i-1][j], dp[i][j-1])
     return dp[m-1][n-1]
